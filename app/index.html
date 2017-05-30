@@ -42,15 +42,23 @@
                 <tr>
                     <th>Description</th>
                     <th>Done</th>
+                    <th>Remove</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="item in todo.items">
+                <tr ng-repeat="item in todo.items | checkedItems:showComplete | orderBy:'action'">
                     <td>{{item.action}}</td>
                     <td><input type="checkbox" ng-model="item.done"/></td>
+                    <td>
+                        <!--<button class="btn btn-danger btn-sm" ng-click="removeItem(item)">Delete</button>-->
+                        <button class="btn btn-sm btn-danger glyphicon glyphicon-trash" ng-click="removeItem(item)"></button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
+            <hr>
+            <div class="checkbox-inline"></div>
+            <label><input type="checkbox" ng_model="showComplete"> Show Complete</label>
         </div>
     </div>
 </div>

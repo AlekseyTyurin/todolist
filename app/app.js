@@ -2,16 +2,26 @@
 
 // Declare app level module which depends on views, and components
 var model = {
-    user: "Aleksey",
-    items: [
-        {action: "Buy Flowers", done: false},
-        {action: "Clean Room", done: false},
-        {action: "Collect Tickets", done: false},
-        {action: "Call Ann", done: false}
-    ]
+    user: "Aleksey"
 };
 
 var todoApp = angular.module("todoApp", []);
+
+todoApp.run(function ($http) {
+    $http.get("assets/todo.json").success(function (data) {
+        model.items = data;
+    });
+});
+
+todoApp.filter("checkedItems", function () {
+    return function (items, showComplete) {
+        var resultArr = [];
+        angular.forEach(items, function (item) {
+            if(item.done == false || showComplete == true) resultArr.push(item)
+        });
+        return resultArr;
+    }
+})
 
 todoApp.controller("ToDoController", function ($scope) {
     $scope.todo = model;
@@ -30,5 +40,10 @@ todoApp.controller("ToDoController", function ($scope) {
 
     $scope.addNewItem = function (actionText) {
         $scope.todo.items.push({ action: actionText, done: false });
+    }
+    
+    $scope.removeItem = function (item_) {
+        var index = $scope.todo.items.indexOf(item_);
+        $scope.todo.items.splice(index, 1);
     }
 })
