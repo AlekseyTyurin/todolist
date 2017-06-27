@@ -90,3 +90,12 @@
     background-color: transparent;
     font-size: 18px;
 }
+
+input.ng-invalid.ng-touched {
+    background-color: #c9302c;
+}
+
+input.ng-valid.ng-touched {
+    background-color: #4cae4c;
+}
+
